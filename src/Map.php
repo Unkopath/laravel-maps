@@ -1198,19 +1198,19 @@ class Map
 
             if (!$this->loadAsynchronously) {
                 $this->output_js .= '
-                <script type="text/javascript" src="'.$apiLocation.'"></script>';
+                <script src="'.$apiLocation.'"></script>';
             }
 
             if ($this->cluster) {
                 $this->output_js .= '
 
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer_compiled.js"></script >
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer_compiled.js"></script >
                     ';
             }
         }
         if ($this->jsfile == "") {
             $this->output_js .= '
-            <script type="text/javascript">
+            <script>
             //<![CDATA[
             ';
         }
@@ -2256,7 +2256,7 @@ class Map
                     $this->output_js .= $this->output_js_contents;
                 } else {
                     $this->output_js .= '
-                    <script src="'.$this->jsfile.'" type="text/javascript"></script>';
+                    <script src="'.$this->jsfile.'"></script>';
                 }
             }
         }
