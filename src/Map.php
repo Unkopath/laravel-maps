@@ -2,7 +2,6 @@
 
 class Map
 {
-
     protected $output_js;
     protected $output_js_contents;
     protected $output_html;
@@ -404,7 +403,7 @@ class Map
 
         $marker_output .= '
             };
-            marker_'.$marker_id.' = createMarker_'.$this->map_name.'(markerOptions);
+            marker_'.$marker_id.' = createMarker_'.$this->map_name.'(markerOptions, markers_map, lat_longs_map);
             ';
 
         if ($marker['infowindow_content'] != "") {
@@ -1198,24 +1197,29 @@ class Map
 
             if (!$this->loadAsynchronously) {
                 $this->output_js .= '
-                <script type="text/javascript" src="'.$apiLocation.'"></script>';
+                <script async defer src="'.$apiLocation.'"></script>';
             }
 
             if ($this->cluster) {
                 $this->output_js .= '
 
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer_compiled.js"></script >
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer_compiled.js"></script >
                     ';
             }
         }
         if ($this->jsfile == "") {
             $this->output_js .= '
-            <script type="text/javascript">
+            <script>
             //<![CDATA[
             ';
         }
 
-        $this->output_js_contents .= '
+        
+
+        $this->output_js_contents .= 'function initialize_'.$this->map_name.'() {
+
+                ';
+                $this->output_js_contents .= '
             var '.$this->map_name.'; // Global declaration of the map
             var lat_longs_'.$this->map_name.' = new Array();
             var markers_'.$this->map_name.' = new Array();
@@ -1265,10 +1269,6 @@ class Map
         $this->output_js_contents .= '});
 
                  ';
-
-        $this->output_js_contents .= 'function initialize_'.$this->map_name.'() {
-
-                ';
 
         $styleOutput = '';
         if (count($this->styles)) {
@@ -2103,7 +2103,7 @@ class Map
 
         // add markers
         $this->output_js_contents .= '
-        function createMarker_'.$this->map_name.'(markerOptions) {
+        function createMarker_'.$this->map_name.'(markerOptions, markers_map, lat_longs_map) {
             var marker = new google.maps.Marker(markerOptions);
             markers_'.$this->map_name.'.push(marker);
             lat_longs_'.$this->map_name.'.push(marker.getPosition());
@@ -2256,7 +2256,7 @@ class Map
                     $this->output_js .= $this->output_js_contents;
                 } else {
                     $this->output_js .= '
-                    <script src="'.$this->jsfile.'" type="text/javascript"></script>';
+                    <script src="'.$this->jsfile.'"></script>';
                 }
             }
         }
