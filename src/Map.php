@@ -1197,7 +1197,7 @@ class Map
 
             if (!$this->loadAsynchronously) {
                 $this->output_js .= '
-                <script async defer src="'.$apiLocation.'"></script>';
+                <script src="'.$apiLocation.'"></script>';
             }
 
             if ($this->cluster) {
@@ -2225,6 +2225,8 @@ class Map
             function loadScript_'.$this->map_name.'() {
                 var script = document.createElement("script");
                 script.type = "text/javascript";
+                script.defer = true;
+                script.async = true;
                 script.src = "'.$apiLocation.'&callback=initialize_'.$this->map_name.'";
                 document.body.appendChild(script);
             }
