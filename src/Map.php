@@ -2227,6 +2227,19 @@ class Map
             ';
         }
 
+        if ($this->lazyLoadOption) {
+            $this->output_js_contents .= '
+            document.addEventListener("lazybeforeunveil", function (e) {
+            var src = e.target.getAttribute("data-script");
+                if (src) {
+                    var script = document.createElement("script");
+                    script.async = true;
+                    script.src = src;
+                    document.head.appendChild(script);
+                }
+            });';  
+        }
+
         if ($this->loadAsynchronously) {
             $this->output_js_contents .= '
             function loadScript_'.$this->map_name.'() {
