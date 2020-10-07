@@ -2020,7 +2020,7 @@ class Map
 
         if ($this->zoom == "auto") {
             $this->output_js_contents .= '
-            fitMapToBounds_'.$this->map_name.'();
+            fitMapToBounds_'.$this->map_name.'(lat_longs_map);
             ';
         }
 
@@ -2205,7 +2205,7 @@ class Map
                     }
                     ';
             if ($this->zoom == "auto") {
-                $this->output_js_contents .= 'fitMapToBounds_'.$this->map_name.'();';
+                $this->output_js_contents .= 'fitMapToBounds_'.$this->map_name.'(lat_longs_map);';
             }
             $this->output_js_contents .= '
                 }
@@ -2215,7 +2215,7 @@ class Map
 
         if ($this->zoom == "auto") {
             $this->output_js_contents .= '
-            function fitMapToBounds_'.$this->map_name.'() {
+            function fitMapToBounds_'.$this->map_name.'(lat_longs_map) {
                 var bounds = new google.maps.LatLngBounds();
                 if (lat_longs_'.$this->map_name.'.length>0) {
                     for (var i=0; i<lat_longs_'.$this->map_name.'.length; i++) {
